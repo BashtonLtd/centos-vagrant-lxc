@@ -51,6 +51,8 @@ chmod 700 ${ROOTFS}/home/vagrant/.ssh
 echo $VAGRANT_KEY > ${ROOTFS}/home/vagrant/.ssh/authorized_keys
 chmod 600 ${ROOTFS}/home/vagrant/.ssh/authorized_keys
 chroot ${ROOTFS} chown -R vagrant:vagrant /home/vagrant/.ssh
+# Allow sudo without a tty
+sed -i -e 's/Defaults.*requiretty/#&/' ${ROOTFS}/etc/sudoers
 
 # Install Puppet
 yum --installroot=$ROOTFS --nogpgcheck -y install http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
