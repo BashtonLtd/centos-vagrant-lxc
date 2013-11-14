@@ -58,6 +58,11 @@ sed -i -e 's/Defaults.*requiretty/#&/' ${ROOTFS}/etc/sudoers
 yum --installroot=$ROOTFS --nogpgcheck -y install http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
 yum --installroot=$ROOTFS --nogpgcheck -y install puppet
 
+# disable loginuid.so
+sed -i '/session\(.*loginuid.so\)$/d' ${ROOTFS}/etc/pam.d/*
+
+# set gettys right
+sed -i 's|ACTIVE_CONSOLES=/dev/tty\[1-6\]|ACTIVE_CONSOLES=/dev/lxc/tty\[1-4\]|' ${ROOTFS}/etc/sysconfig/init
 # If you want chef or whatever support, submit a pull request
 for dir in proc sys dev; do
   umount ${ROOTFS}/${dir}
