@@ -32,7 +32,10 @@ DEVICE=eth0
 ONBOOT=yes
 BOOTPROTO=dhcp
 END
+
 cp /usr/share/zoneinfo/UTC ${ROOTFS}/etc/localtime
+
+echo 'ZONE="UTC"' > ${ROOTFS}/etc/sysconfig/clock
 ### End basic CentOS Install
 
 ### Vagrant modifications
