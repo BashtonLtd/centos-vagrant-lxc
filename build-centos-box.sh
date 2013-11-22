@@ -63,6 +63,25 @@ sed -i '/session\(.*loginuid.so\)$/d' ${ROOTFS}/etc/pam.d/*
 
 # set gettys right
 sed -i 's|ACTIVE_CONSOLES=/dev/tty\[1-6\]|ACTIVE_CONSOLES=/dev/lxc/tty\[1-4\]|' ${ROOTFS}/etc/sysconfig/init
+tee >> ${ROOTFS}/etc/securetty <<SECURETTY
+lxc/tty1
+lxc/tty2
+lxc/tty3
+lxc/tty4
+SECURETTY
+
+tee ${ROOTFS}/etc/init/shutdown.conf <<SHUTDOWN_CONF
+# Trigger an immediate shutdown when upstart receives SIGPWR
+# this is useful for some UPS monitoring tools and for clean
+# shutdown of containers
+
+description "Trigger an immediate shutdown on SIGPWR"
+start on power-status-changed
+
+task
+exec shutdown -h now "SIGPWR received"
+SHUTDOWN_CONF
+
 # If you want chef or whatever support, submit a pull request
 for dir in proc sys dev; do
   umount ${ROOTFS}/${dir}
