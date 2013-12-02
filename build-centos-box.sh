@@ -3,7 +3,7 @@
 # Build a new CentOS6 install in a chroot
 # Loosely based on http://wiki.1tux.org/wiki/Centos6/Installation/Minimal_installation_using_yum
 
-releasever=6.4
+releasever=6.5
 arch=x86_64
 ROOTFS=/rootfs
 VAGRANT_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key"
@@ -12,7 +12,7 @@ VAGRANT_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8
 mkdir -p $ROOTFS
 rpm --root=$ROOTFS --initdb
 rpm --root=$ROOTFS -ivh \
-  http://mirror.centos.org/centos/6.4/os/x86_64/Packages/centos-release-6-4.el6.centos.10.x86_64.rpm
+  http://mirror.centos.org/centos/6.5/os/x86_64/Packages/centos-release-6-5.el6.centos.11.1.x86_64.rpm
 # Install necessary packages
 yum --installroot=$ROOTFS --nogpgcheck -y groupinstall base
 
