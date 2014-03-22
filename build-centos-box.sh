@@ -57,6 +57,10 @@ chroot ${ROOTFS} chown -R vagrant:vagrant /home/vagrant/.ssh
 # Allow sudo without a tty
 sed -i -e 's/Defaults.*requiretty/#&/' ${ROOTFS}/etc/sudoers
 
+# Install Chef
+yum --installroot=$ROOTFS --nogpgcheck -y install ca-certificates wget
+wget -O - https://www.opscode.com/chef/install.sh | bash
+
 # Install Puppet
 yum --installroot=$ROOTFS --nogpgcheck -y install http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
 yum --installroot=$ROOTFS --nogpgcheck -y install puppet
@@ -85,7 +89,7 @@ task
 exec shutdown -h now "SIGPWR received"
 SHUTDOWN_CONF
 
-# If you want chef or whatever support, submit a pull request
+# If you want whatever support, submit a pull request
 for dir in proc sys dev; do
   umount ${ROOTFS}/${dir}
 done
